@@ -21,7 +21,7 @@
 현재 프로젝트를 git을 사용해서 원하는 위치에 checkout 받는다.
 
 ```
-git clone https://github.nhnent.com/toast-lab/gallery_with_django.git --branch release/0.0.1
+git clone https://github.com/okwon78/photo-gallery.git --branch release/0.0.1
 ```
 
 <div id='id-section2'/>
