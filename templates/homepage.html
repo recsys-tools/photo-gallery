@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Gallery{% endblock %}
+
+{% block header %} Welcome to Gallery {% endblock %}
+{% block header_description %} {{ local_path }} {% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <a role="'button" class='btn btn-outline-primary btn-lg' href='/{{ prev }}'>Prev</a>
+        <a role="'button" class='btn btn-outline-primary btn-lg' href='/{{ next }}'>Next</a>
+    </div>
+
+    {% for image_data in image_data_list %}
+        {% if forloop.first %}<div class="row">{% endif %}
+        <div class="item col-xs-4">
+            <figure class="figure">
+                <img class='figure-img img-rounded' src="/static/images/{{ image_data }}">
+                <figcaption class="figure-caption text-xs-right">{{ image_data }}</figcaption>
+            </figure>
+        </div>
+
+        {% if forloop.counter|divisibleby:3 %}</div><div class="row">{% endif %}
+        {% if forloop.last %}</div>{% endif %}
+    {%  endfor %}
+
+    <div class="row">
+        <a role="button" class='btn btn-outline-primary' href='/{{ prev }}'>Prev</a>
+        <a role="button" class='btn btn-outline-primary' href='/{{ next }}'>Next</a>
+    </div>
+{% endblock %}

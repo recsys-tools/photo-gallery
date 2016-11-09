@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Gallery{% endblock %}
+
+{% block header %} Welcome to Gallery {% endblock %}
+{% block header_description %} {{ local_path }} {% endblock %}
+{% block num_pages %} The number of pages : {{ num_pages }} {% endblock %}
+{% block current_page %} Current page : {{ current_page }} {% endblock %}
+
+{% block buttons-top %}
+        <div class="col-md-4">
+            <a role="button" class='btn btn-outline-primary btn-lg' href='/{{ prev }}'>Prev</a>
+            <a role="button" class='btn btn-outline-primary btn-lg' href='/{{ next }}'>Next</a>
+        </div>
+        <div class="col-md-4">
+            <a role="button" class='btn btn-outline-primary btn-lg' href='/select_images/{{ current }}'>삭제 페이지</a>
+        </div>
+{% endblock %}
+
+{% block images %}
+    {% for image_data in image_data_list %}
+        {% if forloop.first %}<div class="row">{% endif %}
+    <div class="item col-xs-4">
+        <figure class="figure">
+            <img class='figure-img img-rounded' src="/static/images/{{ image_data }}">
+            <figcaption class="figure-caption text-xs-right">{{ image_data }}</figcaption>
+        </figure>
+    </div>
+
+    {% if forloop.counter|divisibleby:3 %}</div><div class="row">{% endif %}
+    {% if forloop.last %}</div>{% endif %}
+    {%  endfor %}
+{% endblock %}
+
+{% block buttons-bottom %}
+    <div class="col-md-4">
+        <a role="button" class='btn btn-outline-primary btn-lg' href='/{{ prev }}'>Prev</a>
+        <a role="button" class='btn btn-outline-primary btn-lg' href='/{{ next }}'>Next</a>
+    </div>
+    <div class="col-md-4">
+        <a role="button" class='btn btn-outline-primary btn-lg' href='/select_images/{{ current }}'>삭제 페이지</a>
+    </div>
+{% endblock %}

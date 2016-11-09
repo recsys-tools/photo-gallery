@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block title %}deletion{% endblock %}
+
+{% block header %} 신중하게 삭제하세요. {% endblock %}
+{% block header_description %} {{ local_path }} {% endblock %}
+{% block num_pages %} The number of pages : {{ num_pages }} {% endblock %}
+{% block current_page %} Current page : {{ current_page }} {% endblock %}
+
+{% block buttons-top %}
+    <div class="col-md-4">
+        <a role="button" class='btn btn-outline-primary btn-lg' href='/select_images/{{ prev }}'>Prev</a>
+        <a role="button" class='btn btn-outline-primary btn-lg' href='/select_images/{{ next }}'>Next</a>
+    </div>
+    <div class="col-md-4">
+        <a role="button" class='btn btn-outline-primary btn-lg' href='/{{ current }}'>갤러리 페이지</a>
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-btn-outline-primary btn-lg delete-btn" type="submit">삭제</button>
+    </div>
+{% endblock %}
+
+{% block images %}
+    {% for image_data in image_data_list %}
+        {% if forloop.first %}<div class="row">{% endif %}
+    <div class="item col-xs-4">
+        <figure class='image-entity' class="figure">
+            <img class='figure-img img-rounded' src="/static/images/{{ image_data }}">
+            <figcaption class="figure-caption text-xs-right">
+                <input name='{{image_data}}' type="checkbox" autocomplete="off">
+                <p>{{ image_data }}</p>
+            </figcaption>
+{#                <figcaption class="figure-caption text-xs-right">{{ image_data }}</figcaption>#}
+        </figure>
+    </div>
+
+    {% if forloop.counter|divisibleby:3 %}</div><div class="row">{% endif %}
+    {% if forloop.last %}</div>{% endif %}
+    {%  endfor %}
+
+{% endblock %}
+
+{% block buttons-bottom %}
+    <div class="col-md-4">
+        <a role="button" class='btn btn-outline-primary btn-lg' href='/select_images/{{ prev }}'>Prev</a>
+        <a role="button" class='btn btn-outline-primary btn-lg' href='/select_images/{{ next }}'>Next</a>
+    </div>
+    <div class="col-md-4">
+        <a role="button" class='btn btn-outline-primary btn-lg' href='/{{ current }}'>갤러리 페이지</a>
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-btn-outline-primary btn-lg delete-btn" type="submit">삭제</button>
+    </div>
+{% endblock %}
+
+{% block script-content %}
+    <script>
+        $(document).ready(function() {
+
+            var send_file_list = function (jsonString) {
+                console.log(jsonString)
+                $.ajax({
+                    url: "/image-list-delete/",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    type: "POST",
+                    cache: false,
+                    timeout: 30000,
+                    dataType: "json",
+                    data: jsonString,
+                    success: [function () {
+                        location.reload();
+                    }],
+                    error: [function (xhr) {
+                        location.reload();
+                        console.log(xhr)
+                    }]
+                });
+            };
+
+            $(".delete-btn").click(function () {
+                var file_list = [];
+
+                $('.image-entity > figcaption > input').each(function () {
+                    if ($(this).is(':checked')) {
+                        var filename = $(this).attr('name');
+                        file_list.push(filename);
+                    }
+                });
+
+                var jsonString =  JSON.stringify(file_list)
+                send_file_list(jsonString)
+            });
+        });
+    </script>
+{% endblock %}

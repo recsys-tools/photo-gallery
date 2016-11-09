@@ -1,0 +1,29 @@
+/* Some customisation for the Photologue demo site. */
+
+
+body {
+	font-family: sans-serif;
+    margin-bottom: 100px;
+}
+
+.page-header {
+	margin-top: 20px;
+	margin-bottom: 10px;
+    margin-left: 100px;
+}
+
+.item {
+	width: 350px;
+	float: left;
+}
+
+.item img {
+	display: block;
+	width: 100%;
+
+}
+.row {
+    margin-left: -20px;
+    *zoom: 1;
+    margin-top: 50px;
+}
